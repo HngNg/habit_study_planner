@@ -1,3 +1,31 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude Code (user-specific configuration)
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+
 # Logs
 logs
 *.log
@@ -42,6 +70,11 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Build directories
+dist/
+build/
+*.egg-info/
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
@@ -74,10 +107,11 @@ web_modules/
 
 # dotenv environment variable files
 .env
+.env.local
 .env.development.local
 .env.test.local
 .env.production.local
-.env.local
+*.env
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -134,3 +168,38 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+playwright/.auth/
+
+# Alembic
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker
+*.pid
+docker-compose.override.local.yml
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+.*.swp
+*~
