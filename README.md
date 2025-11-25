@@ -54,6 +54,24 @@ npm install
 npm run dev
 ```
 
+## 🧪 Running Tests
+
+### Backend Tests
+The backend uses `pytest` for testing.
+
+```bash
+cd backend
+pytest
+```
+
+### Frontend Tests
+The frontend uses `vitest` for testing.
+
+```bash
+cd frontend
+npm test
+```
+
 ## 📂 Project Structure
 
 ```text
