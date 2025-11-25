@@ -1,50 +1,72 @@
-# Habit & Study Planner
+# Student Habit Builder PWA
 
-PWA designed for university students who struggle with consistency in studying and personal productivity.
+A local-first Progressive Web App (PWA) designed to help university students build and maintain consistent study habits using the principles of *Atomic Habits*.
 
-## Technology Stack and Features
+## 🎯 Vision
 
-- ⚡ [**FastAPI**](https://fastapi.tiangolo.com) for the Python backend API.
-  - 🧰 [SQLModel](https://sqlmodel.tiangolo.com) for the Python SQL database interactions (ORM).
-  - 🔍 [Pydantic](https://docs.pydantic.dev), used by FastAPI, for the data validation and settings management.
-  - 💾 [PostgreSQL](https://www.postgresql.org) as the SQL database.
-- 🚀 [React](https://react.dev) for the frontend.
-  - 💃 Using TypeScript, hooks, Vite, and other parts of a modern frontend stack.
-  - 🎨 [Chakra UI](https://chakra-ui.com) for the frontend components.
-  - 🤖 An automatically generated frontend client.
-  - 🧪 [Playwright](https://playwright.dev) for End-to-End testing.
-  - 🦇 Dark mode support.
-- 🐋 [Docker Compose](https://www.docker.com) for development and production.
-- 🔒 Secure password hashing by default.
-- 🔑 JWT (JSON Web Token) authentication.
-- 📫 Email based password recovery.
-- ✅ Tests with [Pytest](https://pytest.org).
-- 📞 [Traefik](https://traefik.io) as a reverse proxy / load balancer.
-- 🚢 Deployment instructions using Docker Compose, including how to set up a frontend Traefik proxy to handle automatic HTTPS certificates.
-- 🏭 CI (continuous integration) and CD (continuous deployment) based on GitHub Actions.
+The goal is to move beyond simple to-do lists and focus on **Identity-Based Habits**. By applying the Four Laws of Behavior Change, this app helps students become "consistent learners" through small, sustainable actions.
 
-## Backend Development
+## ✨ Key Features
 
-Backend docs: [backend/README.md](./backend/README.md).
+*   **Identity Onboarding:** Define who you want to become (e.g., "I am a disciplined scholar").
+*   **Habit Stacking:** Link new habits to existing cues (e.g., "After I brush my teeth, I will...").
+*   **Tiny Versions:** Every habit has a "2-minute version" to lower the barrier on difficult days.
+*   **Focus Timer:** Built-in Pomodoro timer that automatically logs progress.
+*   **Local-First & Offline:** All data is stored locally (IndexedDB). No internet required.
+*   **Analytics:** GitHub-style consistency heatmap and streak tracking.
+*   **Data Export:** Full CSV export for backup and analysis.
 
-## Frontend Development
+## 🛠 Tech Stack
 
-Frontend docs: [frontend/README.md](./frontend/README.md).
+*   **Frontend:** React, TypeScript, Vite, TanStack Query, Dexie.js (IndexedDB).
+*   **Backend:** Python, FastAPI (Support service).
+*   **Infrastructure:** Docker, Docker Compose.
 
-## Deployment
+## 🚀 Getting Started
 
-Deployment docs: [deployment.md](./deployment.md).
+### Prerequisites
+*   Docker & Docker Compose
 
-## Development
+### Quick Start (Recommended)
+Run the entire stack with a single command:
 
-General development docs: [development.md](./development.md).
+```bash
+docker-compose up --build
+```
 
-This includes using Docker Compose, custom local domains, `.env` configurations, etc.
+Access the application:
+*   **App:** [http://localhost:5173](http://localhost:5173)
+*   **API Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)
 
-## Release Notes
+### Manual Setup
 
-Check the file [release-notes.md](./release-notes.md).
+**Backend:**
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
 
-## License
+**Frontend:**
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-The Full Stack FastAPI Template is licensed under the terms of the MIT license.
+## 📂 Project Structure
+
+```text
+/habit_study
+├── /backend          # FastAPI Application
+├── /frontend         # React PWA Application
+│   ├── /src
+│   │   ├── /components  # UI Components
+│   │   ├── /db          # Local Database (Dexie)
+│   │   ├── /hooks       # Logic Hooks
+│   │   └── /pages       # App Pages
+└── docker-compose.yml
+```
+
+## 📄 License
+This project is created for the ITPM course.
