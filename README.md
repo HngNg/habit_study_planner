@@ -75,15 +75,37 @@ npm test
 ## 📂 Project Structure
 
 ```text
-/habit_study
-├── /backend          # FastAPI Application
-├── /frontend         # React PWA Application
-│   ├── /src
-│   │   ├── /components  # UI Components
-│   │   ├── /db          # Local Database (Dexie)
-│   │   ├── /hooks       # Logic Hooks
-│   │   └── /pages       # App Pages
-└── docker-compose.yml
+habit_study_planner/
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── HabitCard.tsx
+│   │   │   ├── HabitForm.tsx
+│   │   │   ├── StreakBadge.tsx
+│   │   │   ├── Heatmap.tsx
+│   │   │   └── Modal.tsx
+│   │   ├── pages/
+│   │   │   ├── Dashboard.tsx
+│   │   │   └── Onboarding.tsx
+│   │   ├── hooks/
+│   │   │   ├── useHabitLog.ts
+│   │   │   └── useStreaks.ts
+│   │   ├── db/
+│   │   │   └── db.ts
+│   │   ├── utils/
+│   │   │   └── export.ts
+│   │   └── App.tsx
+│   ├── public/
+│   │   ├── manifest.json
+│   │   └── sw.js
+│   └── package.json
+│
+├── backend/
+│   ├── main.py
+│   ├── requirements.txt
+│   └── Dockerfile
+│
+└── README.md
 ```
 
 ## 📄 License
