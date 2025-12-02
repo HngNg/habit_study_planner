@@ -22,10 +22,11 @@ export const Heatmap: React.FC = () => {
   }, {} as Record<string, number>);
 
   const getColor = (count: number) => {
-    if (count === 0) return 'var(--bg-card)';
-    if (count <= 2) return 'rgba(59, 130, 246, 0.4)';
-    if (count <= 4) return 'rgba(59, 130, 246, 0.7)';
-    return 'var(--primary)';
+    if (count === 0) return 'rgba(51, 65, 85, 0.3)'; // Lighter gray with opacity - no activity (was #334155)
+    if (count === 1) return '#1e40af'; // Darker blue - 1 habit
+    if (count <= 2) return '#2563eb'; // Medium blue - 2 habits
+    if (count <= 4) return '#3b82f6'; // Bright blue - 3-4 habits
+    return '#60a5fa'; // Light blue - 5+ habits (high activity)
   };
 
   return (
@@ -56,13 +57,14 @@ export const Heatmap: React.FC = () => {
           ))}
         </div>
       </div>
-      <div style={{ display: 'flex', gap: '1rem', fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
+      <div style={{ display: 'flex', gap: '1rem', fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.5rem', alignItems: 'center' }}>
         <span>Less</span>
-        <div style={{ display: 'flex', gap: '2px' }}>
-          <div style={{ width: '10px', height: '10px', backgroundColor: 'var(--bg-card)' }} />
-          <div style={{ width: '10px', height: '10px', backgroundColor: 'rgba(59, 130, 246, 0.4)' }} />
-          <div style={{ width: '10px', height: '10px', backgroundColor: 'rgba(59, 130, 246, 0.7)' }} />
-          <div style={{ width: '10px', height: '10px', backgroundColor: 'var(--primary)' }} />
+        <div style={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
+          <div style={{ width: '10px', height: '10px', borderRadius: '2px', backgroundColor: 'rgba(51, 65, 85, 0.3)' }} />
+          <div style={{ width: '10px', height: '10px', borderRadius: '2px', backgroundColor: '#1e40af' }} />
+          <div style={{ width: '10px', height: '10px', borderRadius: '2px', backgroundColor: '#2563eb' }} />
+          <div style={{ width: '10px', height: '10px', borderRadius: '2px', backgroundColor: '#3b82f6' }} />
+          <div style={{ width: '10px', height: '10px', borderRadius: '2px', backgroundColor: '#60a5fa' }} />
         </div>
         <span>More</span>
       </div>

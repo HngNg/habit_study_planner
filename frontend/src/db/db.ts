@@ -8,6 +8,7 @@ export interface Habit {
   tinyVersion: string;
   cue: string; // Habit Stacking
   temptationBundle?: string;
+  pinned?: boolean; // Pinned/priority habits
   createdAt: Date;
   archived: boolean;
 }
@@ -30,6 +31,19 @@ export class HabitDatabase extends Dexie {
     this.version(1).stores({
       habits: '++id, title, frequency, archived',
       logs: '++id, habitId, date, type'
+    });
+    // Version 2: Add pinned field
+    this.version(2).stores({
+      habits: '++id, title, frequency, archived, pinned',
+      logs: '++id, habitId, date, type'
+    }).upgrade(async (tx) => {
+      // Migrate existing habits to have pinned: false
+      const habits = await tx.table('habits').toCollection().toArray();
+      for (const habit of habits) {
+        if ((habit as any).pinned === undefined) {
+          await tx.table('habits').update(habit.id!, { pinned: false });
+        }
+      }
     });
   }
 }

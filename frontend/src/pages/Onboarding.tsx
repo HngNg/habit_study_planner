@@ -54,8 +54,9 @@ export const Onboarding: React.FC = () => {
             className="btn btn-primary" 
             style={{ width: '100%' }}
             disabled={!identityInput.trim()}
+            aria-label="Start my journey and complete onboarding"
           >
-            Start My Journey <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
+            Start My Journey <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} aria-hidden="true" />
           </button>
         </form>
       </div>
