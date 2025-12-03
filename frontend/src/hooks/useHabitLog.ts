@@ -24,7 +24,9 @@ export const useHabitLog = () => {
   );
 
   const isHabitCompletedToday = (habitId: number) => {
-    return todayLogs?.some(log => log.habitId === habitId);
+    // A habit is "done" for Today only if there is at least one FULL log.
+    // Tiny logs represent partial progress and should not flip the main check state.
+    return todayLogs?.some(log => log.habitId === habitId && log.type === 'full');
   };
 
   return {
