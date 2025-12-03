@@ -49,3 +49,8 @@ export class HabitDatabase extends Dexie {
 }
 
 export const db = new HabitDatabase();
+
+// Ensure database is opened
+db.open().catch((err) => {
+  console.error('Failed to open database:', err);
+});

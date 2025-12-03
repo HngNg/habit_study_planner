@@ -8,9 +8,11 @@ import { db } from '../db/db';
  */
 export const seedMockData = async (force: boolean = false) => {
   try {
+    console.log('Starting seedMockData...');
     // Check if data already exists
     const existingHabits = await db.habits.count();
     const existingLogs = await db.logs.count();
+    console.log(`Existing data: ${existingHabits} habits, ${existingLogs} logs`);
     
     if (!force && (existingHabits > 0 || existingLogs > 0)) {
       console.log('Database already has data. Skipping seed. Use force=true to reseed.');

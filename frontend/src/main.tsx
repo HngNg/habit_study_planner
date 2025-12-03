@@ -11,16 +11,11 @@ createRoot(document.getElementById('root')!).render(
       position="top-center"
       toastOptions={{
         duration: 3000,
-        style: {
-          background: 'var(--bg-secondary)',
-          color: 'var(--text-primary)',
-          border: '1px solid var(--bg-card)',
-          borderRadius: 'var(--radius-md)',
-        },
+        className: 'bg-white dark:bg-slate-900 text-text-primary border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg',
         success: {
           iconTheme: {
-            primary: 'var(--success)',
-            secondary: 'var(--text-primary)',
+            primary: '#10b981',
+            secondary: '#ffffff',
           },
         },
       }}

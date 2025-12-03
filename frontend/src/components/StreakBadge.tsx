@@ -50,15 +50,9 @@ export const StreakBadge: React.FC<StreakBadgeProps> = ({ habitId }) => {
   if (!streak || streak === 0) return null;
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      alignItems: 'center', 
-      gap: '0.25rem', 
-      color: 'var(--text-accent)',
-      fontSize: '0.875rem',
-      fontWeight: 'bold'
-    }}>
-      <Flame size={16} fill="currentColor" /> {streak}
+    <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400 text-sm font-bold">
+      <Flame size={16} className="fill-current" />
+      <span>{streak}</span>
     </div>
   );
 };

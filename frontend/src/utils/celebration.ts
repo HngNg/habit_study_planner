@@ -68,13 +68,65 @@ export const celebrateStreakMilestone = (streak: number) => {
   return null;
 };
 
-/**
- * Gets a celebration message based on completion type
- */
-export const getCompletionMessage = (habitTitle: string, type: 'full' | 'tiny'): string => {
-  if (type === 'tiny') {
-    return `✨ Great start! You did the tiny version of "${habitTitle}"`;
+const extractIdentityRole = (identity?: string | null): string | null => {
+  if (!identity) return null;
+  const trimmed = identity.trim();
+  if (!trimmed) return null;
+  const lower = trimmed.toLowerCase();
+  if (lower.startsWith('i am ')) {
+    return trimmed.slice(4).trim() || trimmed;
   }
-  return `🎯 Well done! You completed "${habitTitle}"`;
+  return trimmed;
+};
+
+/**
+ * Gets a celebration message based on completion type, weaving in identity when available.
+ */
+export const getCompletionMessage = (
+  habitTitle: string,
+  type: 'full' | 'tiny',
+  identity?: string | null
+): string => {
+  const role = extractIdentityRole(identity);
+
+  if (type === 'tiny') {
+    if (role) {
+      return `✨ Small win for your identity as ${role}. You did the tiny version of "${habitTitle}".`;
+    }
+    return `✨ Great start! You did the tiny version of "${habitTitle}".`;
+  }
+
+  if (role) {
+    return `🎯 You acted like ${role} today — you completed "${habitTitle}".`;
+  }
+
+  return `🎯 Well done! You completed "${habitTitle}".`;
+};
+
+/**
+ * Gets a focus-session completion message, with a simple "tough session" rule.
+ * A session is considered "tough" when minutes >= 30.
+ */
+export const getFocusCompletionMessage = (
+  habitTitle: string,
+  minutes: number,
+  identity?: string | null
+): string => {
+  const role = extractIdentityRole(identity);
+  const toughThreshold = 30;
+
+  const base = minutes >= toughThreshold
+    ? `Deep focus session complete! ${minutes} minutes for "${habitTitle}".`
+    : `Focus session complete! ${minutes} minutes for "${habitTitle}".`;
+
+  if (role) {
+    const prefix =
+      minutes >= toughThreshold
+        ? `💪 That was a tough session — you showed up like ${role}.`
+        : `🎯 You voted for your identity as ${role}.`;
+    return `${prefix} ${base}`;
+  }
+
+  return `🎯 ${base}`;
 };
 

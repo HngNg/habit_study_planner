@@ -24,62 +24,65 @@ export const Onboarding: React.FC = () => {
   };
 
   return (
-    <div className="container" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-      <div className="card">
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={{ display: 'inline-flex', padding: '1rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', borderRadius: '50%', marginBottom: '1rem' }}>
-            <Sparkles size={32} className="text-primary" style={{ color: 'var(--primary)' }} />
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-base-light">
+      <div className="w-full max-w-md">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-8 md:p-10">
+          {/* Icon */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-900/30">
+              <Sparkles className="w-8 h-8 text-primary" />
+            </div>
           </div>
-          <h1 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Who do you want to become?</h1>
-          <p style={{ color: 'var(--text-secondary)' }}>
-            Atomic Habits starts with identity. Define the person you are building habits for.
-          </p>
+
+          {/* Heading */}
+          <div className="text-center mb-8">
+            <h1 className="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+              Who do you want to become?
+            </h1>
+            <p className="text-base text-text-secondary leading-relaxed">
+              Atomic Habits starts with identity. Define the person you are building habits for.
+            </p>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label 
+                htmlFor="identity" 
+                className="block text-sm font-medium text-text-secondary mb-2"
+              >
+                Complete the sentence:
+              </label>
+              <input
+                id="identity"
+                type="text"
+                className="input text-base"
+                placeholder="I am a consistent learner..."
+                value={identityInput}
+                onChange={(e) => setIdentityInput(e.target.value)}
+                autoFocus
+              />
+            </div>
+
+            <div className="space-y-3">
+              <button 
+                type="submit" 
+                className="btn btn-primary w-full flex items-center justify-center gap-2 py-3.5 text-base font-semibold shadow-sm hover:shadow-md transition-shadow"
+                aria-label="Start my journey and complete onboarding"
+              >
+                Start My Journey
+                <ArrowRight className="w-5 h-5" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className="w-full py-3 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
+                onClick={handleSkip}
+              >
+                Skip for now
+              </button>
+            </div>
+          </form>
         </div>
-
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label 
-              htmlFor="identity" 
-              style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}
-            >
-              Complete the sentence:
-            </label>
-            <input
-              id="identity"
-              type="text"
-              className="input"
-              placeholder="I am a consistent learner..."
-              value={identityInput}
-              onChange={(e) => setIdentityInput(e.target.value)}
-              autoFocus
-            />
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <button 
-              type="submit" 
-              className="btn btn-primary" 
-              style={{ width: '100%' }}
-              aria-label="Start my journey and complete onboarding"
-            >
-              Start My Journey <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              className="btn"
-              style={{
-                width: '100%',
-                backgroundColor: 'transparent',
-                border: '1px solid var(--bg-card)',
-                color: 'var(--text-secondary)',
-                fontSize: '0.85rem',
-              }}
-              onClick={handleSkip}
-            >
-              Skip for now
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );
