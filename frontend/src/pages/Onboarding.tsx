@@ -10,9 +10,15 @@ export const Onboarding: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!identityInput.trim()) return;
+    const trimmed = identityInput.trim();
+    if (trimmed) {
+      setIdentity(trimmed);
+    }
+    completeOnboarding();
+    navigate('/');
+  };
 
-    setIdentity(identityInput);
+  const handleSkip = () => {
     completeOnboarding();
     navigate('/');
   };
@@ -49,15 +55,30 @@ export const Onboarding: React.FC = () => {
             />
           </div>
 
-          <button 
-            type="submit" 
-            className="btn btn-primary" 
-            style={{ width: '100%' }}
-            disabled={!identityInput.trim()}
-            aria-label="Start my journey and complete onboarding"
-          >
-            Start My Journey <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} aria-hidden="true" />
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <button 
+              type="submit" 
+              className="btn btn-primary" 
+              style={{ width: '100%' }}
+              aria-label="Start my journey and complete onboarding"
+            >
+              Start My Journey <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className="btn"
+              style={{
+                width: '100%',
+                backgroundColor: 'transparent',
+                border: '1px solid var(--bg-card)',
+                color: 'var(--text-secondary)',
+                fontSize: '0.85rem',
+              }}
+              onClick={handleSkip}
+            >
+              Skip for now
+            </button>
+          </div>
         </form>
       </div>
     </div>

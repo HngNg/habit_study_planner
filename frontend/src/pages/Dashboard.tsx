@@ -8,19 +8,22 @@ import { Modal } from '../components/Modal';
 import { HabitForm } from '../components/HabitForm';
 import { Timer } from '../components/Timer';
 import { Heatmap } from '../components/Heatmap';
-import { Plus, Download, Smartphone } from 'lucide-react';
+import { Plus, Download, Smartphone, Upload } from 'lucide-react';
 import { useHabitLog } from '../hooks/useHabitLog';
 import { useStreaks } from '../hooks/useStreaks';
 import { exportData } from '../utils/export';
+import { importDataFromFiles } from '../utils/import';
 import { triggerConfetti, celebrateStreakMilestone, getCompletionMessage } from '../utils/celebration';
 import { seedMockData } from '../utils/seedData';
 import { usePWAInstall } from '../hooks/usePWAInstall';
 
 export const Dashboard: React.FC = () => {
-  const { identity } = useUserStore();
+  const { identity, setIdentity } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTimerOpen, setIsTimerOpen] = useState(false);
   const [activeHabit, setActiveHabit] = useState<Habit | null>(null);
+  const [isEditingIdentity, setIsEditingIdentity] = useState(false);
+  const [identityDraft, setIdentityDraft] = useState(identity ?? '');
   
   const { logHabit, isHabitCompletedToday } = useHabitLog();
   const { calculateStreak } = useStreaks();
@@ -144,13 +147,105 @@ export const Dashboard: React.FC = () => {
     }
   };
 
+  const handleImport = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    try {
+      const result = await importDataFromFiles(files);
+      toast.success(`Imported ${result.habits} habits and ${result.logs} logs.`, {
+        duration: 4000,
+      });
+    } catch (error) {
+      console.error('Import failed:', error);
+      toast.error('Failed to import data. Please check the CSV format.');
+    }
+  };
+
+  const handleIdentitySave = () => {
+    const trimmed = identityDraft.trim();
+    if (trimmed) {
+      setIdentity(trimmed);
+      toast.success('Identity updated.', { duration: 2500 });
+    } else {
+      setIdentity('');
+      toast.success('Identity cleared.', { duration: 2500 });
+    }
+    setIsEditingIdentity(false);
+  };
+
+  const handleIdentityCancel = () => {
+    setIdentityDraft(identity ?? '');
+    setIsEditingIdentity(false);
+  };
+
   return (
     <div className="container" style={{ paddingBottom: '6rem' }}>
       <header style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Today</h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
-          {identity ? (identity.toLowerCase().startsWith('i am ') ? identity : `I am ${identity}`) : 'Define your identity'}
-        </p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
+          <div style={{ flex: 1 }}>
+            <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Today</h1>
+            {!isEditingIdentity && (
+              <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
+                {identity
+                  ? (identity.toLowerCase().startsWith('i am ') ? identity : `I am ${identity}`)
+                  : 'Define your identity to frame your habits.'}
+              </p>
+            )}
+            {isEditingIdentity && (
+              <div style={{ marginTop: '0.25rem' }}>
+                <label
+                  htmlFor="identity-inline"
+                  style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.8rem', color: 'var(--text-secondary)' }}
+                >
+                  Identity statement (e.g., "I am a consistent learner")
+                </label>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <input
+                    id="identity-inline"
+                    type="text"
+                    className="input"
+                    style={{ maxWidth: '320px' }}
+                    value={identityDraft}
+                    onChange={(e) => setIdentityDraft(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    style={{ fontSize: '0.8rem', padding: '0.4rem 0.9rem' }}
+                    onClick={handleIdentitySave}
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="btn"
+                    style={{ fontSize: '0.8rem', padding: '0.4rem 0.9rem' }}
+                    onClick={handleIdentityCancel}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+          {!isEditingIdentity && (
+            <button
+              type="button"
+              className="btn"
+              style={{
+                fontSize: '0.75rem',
+                padding: '0.35rem 0.75rem',
+                whiteSpace: 'nowrap',
+                alignSelf: 'flex-start',
+              }}
+              onClick={() => {
+                setIdentityDraft(identity ?? '');
+                setIsEditingIdentity(true);
+              }}
+            >
+              {identity ? 'Edit identity' : 'Set identity'}
+            </button>
+          )}
+        </div>
       </header>
 
       {/* Install App Section - Always visible if not installed */}
@@ -254,13 +349,39 @@ export const Dashboard: React.FC = () => {
       <Heatmap />
 
       <footer style={{ marginTop: '3rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
-        <button 
-          className="btn" 
-          style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-secondary)', fontSize: '0.875rem' }}
-          onClick={exportData}
-        >
-          <Download size={16} style={{ marginRight: '0.5rem' }} /> Export Data (CSV)
-        </button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', alignItems: 'center' }}>
+          <button 
+            className="btn" 
+            style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-secondary)', fontSize: '0.875rem' }}
+            onClick={exportData}
+          >
+            <Download size={16} style={{ marginRight: '0.5rem' }} /> Export Data (CSV)
+          </button>
+
+          <label
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.8rem',
+              cursor: 'pointer',
+              color: 'var(--text-secondary)',
+            }}
+          >
+            <input
+              type="file"
+              accept=".csv,text/csv"
+              multiple
+              style={{ display: 'none' }}
+              onChange={(e) => {
+                void handleImport(e.target.files);
+                e.target.value = '';
+              }}
+            />
+            <Upload size={14} />
+            <span>Import backup (habits + logs CSV)</span>
+          </label>
+        </div>
       </footer>
 
       {/* Floating Action Button */}
