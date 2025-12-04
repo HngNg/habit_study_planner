@@ -74,8 +74,8 @@ export const HabitCard: React.FC<HabitCardProps> = ({
       }}
       className={cn(
         "relative bg-white dark:bg-slate-900 rounded-lg p-4 mb-4 shadow-sm border transition-all duration-300",
-        habit.pinned && !isCompleted && "border-l-4 border-focus-DEFAULT bg-focus-light/30",
-        isCompleted && "border-success-DEFAULT/50 bg-success-light/40 dark:bg-success-DEFAULT/10"
+        habit.pinned && !isCompleted && "border-l-4 border-primary bg-amber-50/50 dark:bg-amber-900/10",
+        isCompleted && "bg-[#10b981]/10 dark:bg-[#10b981]/20 border-2 border-[#10b981]/30"
       )}
     >
       {/* Law 1: Make it Obvious - Pinned indicator */}
@@ -83,7 +83,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({
         <div className="absolute top-3 right-3">
           <Pin 
             size={14} 
-            className="text-focus-DEFAULT fill-focus-DEFAULT"
+            className="text-primary fill-primary"
             aria-label="Pinned habit"
           />
         </div>
@@ -100,7 +100,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({
               }}
               className={cn(
                 "text-base font-semibold tracking-tight transition-all",
-                isCompleted ? "text-success-DEFAULT" : "text-text-primary"
+                isCompleted ? "text-[#10b981]" : "text-text-primary"
               )}
             >
               {habit.title.trim()}
@@ -111,7 +111,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({
           {/* Law 1: Cue - Secondary, italic */}
           <p className={cn(
             "text-sm italic mb-2 transition-colors",
-            isCompleted ? "text-success-DEFAULT/70" : "text-text-secondary"
+            isCompleted ? "text-[#10b981]/70" : "text-text-secondary"
           )}>
             {habit.cue.trim()}
           </p>
@@ -123,7 +123,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({
               animate={{ opacity: 1, y: 0 }}
               className={cn(
                 "flex items-center gap-1.5 text-xs mb-2",
-                isCompleted ? "text-success-DEFAULT/60" : "text-amber-600 dark:text-amber-400"
+                isCompleted ? "text-[#10b981]/60" : "text-amber-600 dark:text-amber-400"
               )}
             >
               <Sparkles size={12} />
@@ -131,16 +131,13 @@ export const HabitCard: React.FC<HabitCardProps> = ({
             </motion.div>
           )}
 
-          {/* Tiny version info */}
-          {!isCompleted && (
+          {/* Timer info - only show when not completed and has minutes */}
+          {!isCompleted && totalMinutesToday > 0 && (
             <div className="flex items-center gap-3 mt-2 text-xs text-text-secondary">
-              <span>Tiny: {habit.tinyVersion}</span>
-              {totalMinutesToday > 0 && (
-                <span className="flex items-center gap-1 text-primary-DEFAULT font-medium">
-                  <Timer size={12} />
-                  {totalMinutesToday} min
-                </span>
-              )}
+              <span className="flex items-center gap-1 text-primary font-medium">
+                <Timer size={12} />
+                {totalMinutesToday} min
+              </span>
             </div>
           )}
 
@@ -151,19 +148,19 @@ export const HabitCard: React.FC<HabitCardProps> = ({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex items-center gap-2 mt-3 px-3 py-2 bg-success-DEFAULT/10 dark:bg-success-DEFAULT/20 rounded-lg border border-success-DEFAULT/20"
+                className="flex items-center gap-2 mt-3 px-3 py-2 bg-[#10b981]/10 dark:bg-[#10b981]/20 rounded-lg border border-[#10b981]/20"
               >
                 <motion.div
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  <Sparkles size={16} className="text-success-DEFAULT" />
+                  <Sparkles size={16} className="text-[#10b981]" />
                 </motion.div>
-                <span className="text-sm font-semibold text-success-DEFAULT">
+                <span className="text-sm font-semibold text-[#10b981]">
                   Completed for today!
                 </span>
                 {totalMinutesToday > 0 && (
-                  <span className="ml-auto flex items-center gap-1 text-xs text-success-DEFAULT/70 font-medium">
+                  <span className="ml-auto flex items-center gap-1 text-xs text-[#10b981]/70 font-medium">
                     <Timer size={12} />
                     {totalMinutesToday} min focused
                   </span>
@@ -234,7 +231,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({
               "relative p-4 rounded-full touch-target transition-all duration-300 group",
               isCompleted
                 ? "bg-[#10b981] text-white shadow-xl shadow-[#10b981]/50 ring-4 ring-[#10b981]/30"
-                : "bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-text-secondary hover:border-primary-DEFAULT hover:text-primary-DEFAULT hover:shadow-lg hover:bg-primary-DEFAULT/5"
+                : "bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-text-secondary hover:border-primary hover:text-primary hover:shadow-lg hover:bg-primary/5"
             )}
             aria-label={isCompleted ? "Completed" : "Mark as Done"}
           >
@@ -251,7 +248,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({
                 className={cn(
                   isCompleted 
                     ? "text-white" 
-                    : "text-text-secondary group-hover:text-primary-DEFAULT"
+                    : "text-text-secondary group-hover:text-primary"
                 )} 
               />
             </motion.div>
@@ -300,7 +297,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({
               whileHover={{ scale: 1.05, boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)' }}
               whileTap={{ scale: 0.95 }}
               onClick={() => onFocus(habit)}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium bg-focus-light dark:bg-focus-DEFAULT/20 text-focus-DEFAULT rounded-md hover:bg-focus-light/80 dark:hover:bg-focus-DEFAULT/30 transition-all touch-target relative group"
+              className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-md hover:bg-indigo-100 dark:hover:bg-indigo-900/30 transition-all touch-target relative group"
               aria-label="Start focus timer"
             >
               <Timer size={14} />

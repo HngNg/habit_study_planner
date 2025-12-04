@@ -430,7 +430,7 @@ export const Dashboard: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsModalOpen(true)}
-                className="px-6 py-3 bg-primary-DEFAULT text-white rounded-lg font-semibold hover:bg-primary-hover transition-colors touch-target"
+                className="px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-hover transition-colors touch-target"
               >
                 Create First Habit
               </motion.button>
@@ -448,7 +448,7 @@ export const Dashboard: React.FC = () => {
         <footer className="mt-12 text-center">
           <div className="flex flex-col gap-3 items-center">
             {/* Debug: Manual seed button (remove in production) */}
-            {process.env.NODE_ENV === 'development' && (
+            {import.meta.env.DEV && (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -501,7 +501,7 @@ export const Dashboard: React.FC = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsModalOpen(true)}
-            className="fixed bottom-6 right-6 w-14 h-14 bg-primary-DEFAULT text-white rounded-full shadow-lg hover:bg-primary-hover transition-colors flex items-center justify-center touch-target z-50"
+            className="fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-primary-hover transition-colors flex items-center justify-center touch-target z-50"
             aria-label="Create new habit"
           >
             <Plus size={24} />

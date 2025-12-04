@@ -42,11 +42,12 @@ export const usePWAInstall = () => {
     const checkInstallability = () => {
       if (!isInstallable && !isInstalled) {
         console.log('PWA: Install prompt not available. Possible reasons:');
-        console.log('- Missing PWA icons (pwa-192x192.png, pwa-512x512.png)');
+        console.log('- Missing PWA PNG icons (pwa-192x192.png, pwa-512x512.png) - SVG icons may not be sufficient for all browsers');
         console.log('- Not served over HTTPS or localhost');
         console.log('- Service worker not registered');
         console.log('- Browser does not support PWA installation');
         console.log('- App already installed or dismissed previously');
+        console.log('Note: The app will still work, but installation may require PNG icons for some browsers.');
       }
     };
 

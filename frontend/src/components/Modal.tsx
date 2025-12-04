@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
 interface ModalProps {
@@ -15,62 +14,40 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, subtitle, 
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
-    if (isOpen) {
-      window.addEventListener('keydown', handleEsc);
-      // Prevent body scroll when modal is open
-      document.body.style.overflow = 'hidden';
-    }
-    return () => {
-      window.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'unset';
-    };
+    if (isOpen) window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
   }, [isOpen, onClose]);
 
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              onClose();
-            }
-          }}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: -20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -20 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-        {/* Header */}
-        <div className="flex justify-between items-start p-6 pb-4 border-b border-slate-200 dark:border-slate-700 sticky top-0 bg-white dark:bg-slate-900 z-10">
-          <div className="flex-1 pr-4">
-            <h2 className="text-2xl font-bold text-text-primary mb-1">
-              {title}
-            </h2>
-            {subtitle && (
-              <p className="text-sm text-text-secondary italic">
-                {subtitle}
-              </p>
-            )}
-          </div>
-          <button
-            onClick={onClose}
-            aria-label="Close modal"
-            className="flex items-center justify-center w-11 h-11 rounded-lg text-text-secondary hover:text-text-primary hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex-shrink-0 touch-target"
-          >
-            <X size={20} aria-hidden="true" />
-          </button>
-        </div>
+  if (!isOpen) return null;
 
-        {/* Content */}
-        <div className="p-6">{children}</div>
-      </motion.div>
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 50,
+      padding: '1rem'
+    }}>
+      <div className="card" style={{ width: '100%', maxWidth: '500px', maxHeight: '90vh', overflowY: 'auto', position: 'relative' }}>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h2 style={{ margin: 0, fontSize: '1.25rem' }}>{title}</h2>
+              {subtitle && <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>{subtitle}</p>}
+            </div>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', padding: 0 }}>
+              <X size={24} />
+            </button>
+          </div>
+        </div>
+        {children}
+      </div>
     </div>
-      )}
-    </AnimatePresence>
   );
 };
