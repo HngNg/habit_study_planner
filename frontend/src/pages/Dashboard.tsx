@@ -448,7 +448,7 @@ export const Dashboard: React.FC = () => {
         <footer className="mt-12 text-center">
           <div className="flex flex-col gap-3 items-center">
             {/* Debug: Manual seed button (remove in production) */}
-            {process.env.NODE_ENV === 'development' && (
+            {import.meta.env.NODE_ENV === 'development' && (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
