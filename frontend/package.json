@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest",
-    "postinstall": "powershell -ExecutionPolicy Bypass -File ./scripts/ensure-vitejs-plugin-react.ps1"
+    "test": "vitest"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.10",
