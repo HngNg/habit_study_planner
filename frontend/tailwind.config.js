@@ -7,43 +7,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Atomic Minimalism Palette
-        base: {
-          light: '#f8fafc', // slate-50
-          dark: '#020617', // slate-950
-        },
         primary: {
-          DEFAULT: '#f59e0b', // amber-500 (Energy/Spark)
-          hover: '#d97706', // amber-600
+          DEFAULT: '#f59e0b',
+          hover: '#d97706',
         },
-        success: {
-          DEFAULT: '#10b981', // emerald-500 (Growth)
-          light: '#d1fae5', // emerald-100
-        },
-        focus: {
-          DEFAULT: '#4f46e5', // indigo-600 (Depth)
-          light: '#e0e7ff', // indigo-100
-        },
-        text: {
-          primary: '#1e293b', // slate-800
-          secondary: '#64748b', // slate-500
-          muted: '#94a3b8', // slate-400
-        },
+        'base-light': '#f8fafc',
+        'base-dark': '#0f172a',
+        'text-primary': '#1e293b',
+        'text-secondary': '#64748b',
+        'text-muted': '#94a3b8',
+        'bg-card': '#ffffff',
         border: {
-          DEFAULT: '#e2e8f0', // slate-200
-          dark: '#334155', // slate-700
+          DEFAULT: '#e2e8f0',
         },
       },
       fontFamily: {
         sans: ['Inter', 'Geist Sans', 'system-ui', '-apple-system', 'sans-serif'],
       },
-      borderRadius: {
-        'sm': '0.125rem',
-        'md': '0.375rem',
-        'lg': '0.5rem',
-      },
     },
   },
   plugins: [],
 }
-

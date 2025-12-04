@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      includeAssets: ['favicon.svg'],
       manifest: {
         name: 'Student Habit Builder',
         short_name: 'HabitBuilder',
@@ -20,7 +20,7 @@ export default defineConfig({
         scope: '/',
         icons: [
           {
-            src: 'vite.svg',
+            src: 'favicon.svg',
             sizes: 'any',
             type: 'image/svg+xml',
             purpose: 'any'
